@@ -1,0 +1,36 @@
+.search-form {
+  display: flex;
+  justify-content: center;
+  padding: 10 0 10 0;
+
+  background-color: purple;
+}
+.search-form__input {
+  outline: none;
+  border-radius: 5px;
+  border-color: white;
+}
+.search-form__input:focus {
+  border-color: lightblue;
+}
+.search-form__btn {
+  margin-left: 10px;
+}
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.photoCard {
+}
+
+.photoCard__img {
+  width: 300px;
+  height: 200px;
+}
+.photoCard__img:hover {
+  scale: 1.1;
+}
+.load-more {
+}
