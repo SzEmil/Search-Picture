@@ -15,7 +15,16 @@
 }
 .search-form__btn {
   margin-left: 10px;
+  background-color: white;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
+.search-form__btn:hover {
+  background-color: rgb(168, 168, 168);
+  border-color: lightblue;
+}
+
 .gallery {
   padding: 10 0 10 0;
   display: flex;

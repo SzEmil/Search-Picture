@@ -3,6 +3,7 @@
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import throttle from 'lodash.throttle';
 
 const form = document.querySelector('#search-form');
 const gallery = document.querySelector('#photo-gallery');
@@ -23,6 +24,9 @@ loadMoreBtn.style.display = 'none';
 let photoNumber = 0;
 let totalHitsApi = 0;
 let formWords = '';
+
+let scrollPosition = 0;
+let buttonPosition = 0;
 const axios = require('axios');
 //max 13 stron dla cat
 let pageNumber = 1;
@@ -139,12 +143,14 @@ const loadMorePhotos = async () => {
 };
 
 form.addEventListener('submit', searchPhotos);
+
+window.onscroll = throttle(function () {
+  console.log('pozycja scrolla', scrollPosition);
+  console.log('pozycja BUTTONA', buttonPosition);
+  scrollPosition = window.pageYOffset;
+  buttonPosition = loadMoreBtn.offsetTop;
+  if (scrollPosition > buttonPosition - 950) {
+    loadMorePhotos();
+  }
+}, 1000);
 loadMoreBtn.addEventListener('click', loadMorePhotos);
-
-lightbox.on('show.simplelightbox', function () {
-  console.log('lighbox otwarty');
-});
-
-lightbox.on('closed.simplelightbox', function () {
-  console.log('lightbox zamkniety');
-});
