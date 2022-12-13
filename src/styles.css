@@ -7,24 +7,28 @@
 }
 .search-form__input {
   outline: none;
-  border-radius: 5px;
+  border-radius: 5px 0 0 5px;
   border-color: white;
+  border: none;
 }
 .search-form__input:focus {
   border-color: lightblue;
 }
 .search-form__btn {
-  margin-left: 10px;
   background-color: white;
   outline: none;
-  border-radius: 5px;
+  border-radius: 0 5px 5px 0;
   cursor: pointer;
+  border: none;
 }
-.search-form__btn:hover {
-  background-color: rgb(168, 168, 168);
-  border-color: lightblue;
+.search-form__btn:hover .search-form__btn-svg {
+  fill: lightblue;
 }
-
+.search-form__btn-svg {
+  margin-top: 4px;
+  width: 20px;
+  height: 20px;
+}
 .gallery {
   padding: 10 0 10 0;
   display: flex;
