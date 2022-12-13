@@ -65,6 +65,7 @@ const searchPhotos = async event => {
 
         createCard(photosArray);
         lightbox.refresh();
+
         loadMoreBtn.style.display = 'block';
       }
     }
@@ -107,6 +108,14 @@ function createCard(photosArray) {
       gallery.appendChild(photoCard);
     }
   );
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 }
 
 const loadMorePhotos = async () => {
