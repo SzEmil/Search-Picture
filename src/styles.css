@@ -17,8 +17,10 @@
   margin-left: 10px;
 }
 .gallery {
+  padding: 10 0 10 0;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 5px;
 }
 
@@ -33,5 +35,16 @@
 .photoCard__img:hover {
   scale: 1.1;
 }
+.results {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .load-more {
+  border: none;
+  background-color: purple;
+  color: white;
+}
+.load-more:hover {
+  background-color: rgb(85, 1, 85);
 }
