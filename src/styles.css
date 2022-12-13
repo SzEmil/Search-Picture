@@ -95,3 +95,15 @@
   letter-spacing: 0.03em;
   text-align: center;
 }
+
+.floatingBtn {
+  position: fixed;
+  right: 20;
+  bottom: 20;
+  border-radius: 50%;
+
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 28px;
+  padding: 0 6 0 6;
+}

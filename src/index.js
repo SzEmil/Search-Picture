@@ -8,6 +8,7 @@ import throttle from 'lodash.throttle';
 const form = document.querySelector('#search-form');
 const gallery = document.querySelector('#photo-gallery');
 const loadMoreBtn = document.querySelector('.load-more');
+const floatingBtn = document.querySelector('#fltBtn');
 
 var lightbox = new SimpleLightbox('.gallery .gallery__item', {
   /* options */
@@ -62,6 +63,7 @@ const searchPhotos = async event => {
         );
       } else {
         Notiflix.Notify.success(`Hooray! We found ${photos.totalHits} images.`);
+        pageNumber = 1;
         const photosArray = photos.hits;
         console.log(photosArray);
 
@@ -69,7 +71,6 @@ const searchPhotos = async event => {
 
         createCard(photosArray);
         lightbox.refresh();
-
         loadMoreBtn.style.display = 'block';
       }
     }
@@ -136,6 +137,9 @@ const loadMorePhotos = async () => {
 
       createCard(photosArray);
       lightbox.refresh();
+      if (photosArray.length < 40) {
+        loadMoreBtn.style.display = 'none';
+      }
     }
   } catch (error) {
     console.error(error);
@@ -154,3 +158,13 @@ window.onscroll = throttle(function () {
   }
 }, 1000);
 loadMoreBtn.addEventListener('click', loadMorePhotos);
+
+const floatToStart = () => {
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  });
+};
+
+floatingBtn.addEventListener('click', floatToStart);
