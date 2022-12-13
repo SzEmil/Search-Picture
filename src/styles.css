@@ -10,6 +10,7 @@
   border-radius: 5px 0 0 5px;
   border-color: white;
   border: none;
+  padding-left: 10px;
 }
 .search-form__input:focus {
   border-color: lightblue;
