@@ -91,16 +91,16 @@ function createCard(photosArray) {
   <a class="gallery__item" href="${largeImageURL}"><img class ="photoCard__img" src="${webformatURL}" alt="" loading="lazy" /></a>
   <div class="info">
     <p class="info-item">
-      <b>Likes: ${likes}</b>
+      <b>Likes <span class="info-team-data">${likes}</span></b>
     </p>
     <p class="info-item">
-      <b>Views: ${views}</b>
+      <b>Views <span class="info-team-data">${views}</span></b>
     </p>
     <p class="info-item">
-      <b>Comments: ${comments}</b>
+      <b>Comments <span class="info-team-data">${comments}</span></b>
     </p>
     <p class="info-item">
-      <b>Downloads: ${downloads}</b>
+      <b>Downloads <span class="info-team-data">${downloads}</span></b>
     </p>
   </div>
 </div>`;
