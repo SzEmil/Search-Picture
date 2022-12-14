@@ -9,6 +9,7 @@ const form = document.querySelector('#search-form');
 const gallery = document.querySelector('#photo-gallery');
 const loadMoreBtn = document.querySelector('.load-more');
 const floatingBtn = document.querySelector('#fltBtn');
+const loadTypeBtn = document.querySelector('#changeLoadType');
 
 var lightbox = new SimpleLightbox('.gallery .gallery__item', {
   /* options */
@@ -26,11 +27,13 @@ let photoNumber = 0;
 let totalHitsApi = 0;
 let formWords = '';
 
+let enableInfinitScroll = 1;
+
 let scrollPosition = 0;
 let buttonPosition = 0;
 const axios = require('axios');
-//max 13 stron dla cat
 let pageNumber = 1;
+
 const fetchPhotos = async (search, pageNumber) => {
   const response = await fetch(
     `https://pixabay.com/api/?key=31998219-af28b4c3092b69ebd942adff0&q=${search}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${pageNumber}`
@@ -71,7 +74,12 @@ const searchPhotos = async event => {
 
         createCard(photosArray);
         lightbox.refresh();
-        loadMoreBtn.style.display = 'block';
+
+        if (photosArray.length < 40) {
+          loadMoreBtn.style.display = 'none';
+        } else {
+          loadMoreBtn.style.display = 'block';
+        }
       }
     }
   } catch (error) {
@@ -113,14 +121,6 @@ function createCard(photosArray) {
       gallery.appendChild(photoCard);
     }
   );
-  const { height: cardHeight } = document
-    .querySelector('.gallery')
-    .firstElementChild.getBoundingClientRect();
-
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
 }
 
 const loadMorePhotos = async () => {
@@ -137,6 +137,14 @@ const loadMorePhotos = async () => {
 
       createCard(photosArray);
       lightbox.refresh();
+      const { height: cardHeight } = document
+        .querySelector('.gallery')
+        .firstElementChild.getBoundingClientRect();
+
+      window.scrollBy({
+        top: cardHeight * 2,
+        behavior: 'smooth',
+      });
       if (photosArray.length < 40) {
         loadMoreBtn.style.display = 'none';
       }
@@ -148,17 +156,6 @@ const loadMorePhotos = async () => {
 
 form.addEventListener('submit', searchPhotos);
 
-window.onscroll = throttle(function () {
-  console.log('pozycja scrolla', scrollPosition);
-  console.log('pozycja BUTTONA', buttonPosition);
-  scrollPosition = window.pageYOffset;
-  buttonPosition = loadMoreBtn.offsetTop;
-  if (scrollPosition > buttonPosition - 950) {
-    loadMorePhotos();
-  }
-}, 1000);
-loadMoreBtn.addEventListener('click', loadMorePhotos);
-
 const floatToStart = () => {
   window.scroll({
     top: 0,
@@ -168,3 +165,35 @@ const floatToStart = () => {
 };
 
 floatingBtn.addEventListener('click', floatToStart);
+
+function infinitScroll() {
+  console.log('pozycja scrolla', scrollPosition);
+  console.log('pozycja BUTTONA', buttonPosition);
+  scrollPosition = window.pageYOffset;
+  buttonPosition = loadMoreBtn.offsetTop;
+  if (
+    scrollPosition >
+    buttonPosition - document.scrollingElement.clientHeight
+  ) {
+    loadMorePhotos();
+  }
+}
+function checkScrollMode() {
+  if (enableInfinitScroll === -1) {
+    loadTypeBtn.textContent = 'Infinite Scrole Mode';
+    console.log('aktywny tryb infinit scroll');
+    window.addEventListener('scroll', throttle(infinitScroll, 1000));
+    loadMoreBtn.removeEventListener('click', loadMorePhotos);
+  } else if (enableInfinitScroll === 1) {
+    loadTypeBtn.textContent = 'Button Load Mode';
+    console.log('aktywny tryb button');
+    loadMoreBtn.addEventListener('click', loadMorePhotos);
+    window.removeEventListener('onscroll', infinitScroll);
+  }
+}
+loadTypeBtn.addEventListener('click', () => {
+  enableInfinitScroll *= -1;
+  checkScrollMode();
+});
+
+checkScrollMode();
