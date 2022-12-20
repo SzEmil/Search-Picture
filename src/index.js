@@ -36,7 +36,7 @@ let pageNumber = 1;
 
 const fetchPhotos = async (search, pageNumber) => {
   const response = await fetch(
-    `https://pixabay.com/api/?key=31998219-af28b4c3092b69ebd942adff0&q=${search}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${pageNumber}`
+    `https://pixabay.com/api/?key=31998219-af28b4c3092b69ebd942adff0&q=${search}&image_type=photo&orientation=horizontal&safesearch=false&per_page=40&page=${pageNumber}`
   );
   const photos = await response.json();
 
